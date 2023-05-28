@@ -1,1 +1,6 @@
 fastapi
+imutils
+numpy
+Pillow
+scikit-image
+opencv-contrib-python

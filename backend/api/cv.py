@@ -8,7 +8,6 @@ from skimage.filters import threshold_local
 from typing import List
 from PIL import Image, ImageOps
 import numpy as np
-import matplotlib.pyplot as plt
 import cv2
 import io
 import imutils
