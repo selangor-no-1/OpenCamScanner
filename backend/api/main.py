@@ -64,7 +64,7 @@ async def list():
     return JSONResponse(ls(bucket))
 
 
-@app.get("/scan/{firebase_image_dir}")
+@app.post("/scan/{firebase_image_dir}")
 def do_scan(firebase_image_dir: str):
     """
     1. download the image from FB with the given input
