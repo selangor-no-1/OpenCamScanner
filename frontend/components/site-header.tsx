@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import React from 'react'
 import { cn } from "@/lib/utils"
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
