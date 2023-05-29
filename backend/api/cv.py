@@ -4,24 +4,25 @@ References:
 https://pyimagesearch.com/2014/09/01/build-kick-ass-mobile-document-scanner-just-5-minutes/
 """
 
-from skimage.filters import threshold_local
-from typing import List
-from PIL import Image, ImageOps
 import numpy as np
 import cv2
 import io
 import imutils
+from skimage.filters import threshold_local
+from typing import List
+from PIL import Image, ImageOps
+
 
 ################################################################# Utilities
 def load_and_compress(imgs: List[str]) -> List[np.ndarray]:
-    res = []
-    for img in imgs:
-        before = Image.open(img)
-        before = ImageOps.exif_transpose(before)
-        compressed = io.BytesIO()
-        before.save(compressed, format="JPEG", optimize=True, quality=85)
-        res.append(np.array(Image.open(compressed)))
-    return res
+	res = []
+	for img in imgs:
+		before = Image.open(img)
+		before = ImageOps.exif_transpose(before)
+		compressed = io.BytesIO()
+		before.save(compressed, format="JPEG", optimize=True, quality=85)
+		res.append(np.array(Image.open(compressed)))
+	return res
 
 def order_points(pts: np.ndarray) -> np.ndarray: 
 	# initialzie a list of coordinates that will be ordered
@@ -79,39 +80,39 @@ def four_point_transform(image: np.ndarray, pts: np.ndarray):
 ################################################################# Scanning
 
 def scan(img: np.ndarray) -> np.ndarray:
-    ratio = img.shape[0] / 500.0
-    orig = img.copy()
-    img = imutils.resize(img, height=500)
-    
-    # canny edge detection
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (5,5), 0)
-    edge = cv2.Canny(gray, 75, 200)
+	ratio = img.shape[0] / 500.0
+	orig = img.copy()
+	img = imutils.resize(img, height=500)
+	
+	# canny edge detection
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	gray = cv2.GaussianBlur(gray, (5,5), 0)
+	edge = cv2.Canny(gray, 75, 200)
 
-    # find the bounding box of the document
-    cnts = cv2.findContours(edge.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    cnts = imutils.grab_contours(cnts)
-    cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:3]
+	# find the bounding box of the document
+	cnts = cv2.findContours(edge.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+	cnts = imutils.grab_contours(cnts)
+	cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:3]
 
-    screenCnt = None
+	screenCnt = None
 
-    for c in cnts:
-        peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.02*peri, True)
-        
-        if len(approx) == 4:
-            screenCnt = approx
-            break
+	for c in cnts:
+		peri = cv2.arcLength(c, True)
+		approx = cv2.approxPolyDP(c, 0.02*peri, True)
+		
+		if len(approx) == 4:
+			screenCnt = approx
+			break
 
-    if screenCnt is None:
-        raise Exception("Could not find document")
-    
-    # perspective shift
-    warped = four_point_transform(orig, screenCnt.reshape(4,2) * ratio)
-    
-    # post-processing
-    warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
-    T = threshold_local(warped, 11, offset=10, method='gaussian')
-    warped = (warped > T).astype('uint8') * 255
+	if screenCnt is None:
+		raise Exception("Could not find document")
+	
+	# perspective shift
+	warped = four_point_transform(orig, screenCnt.reshape(4,2) * ratio)
+	
+	# post-processing
+	warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
+	T = threshold_local(warped, 11, offset=10, method='gaussian')
+	warped = (warped > T).astype('uint8') * 255
 
-    return warped
+	return warped
