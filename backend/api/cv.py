@@ -23,7 +23,7 @@ def load_and_compress(imgs: List[str]) -> List[np.ndarray]:
         res.append(np.array(Image.open(compressed)))
     return res
 
-def order_points(pts):
+def order_points(pts: np.ndarray) -> np.ndarray: 
 	# initialzie a list of coordinates that will be ordered
 	# such that the first entry in the list is the top-left,
 	# the second entry is the top-right, the third is the
@@ -43,7 +43,7 @@ def order_points(pts):
 	# return the ordered coordinates
 	return rect
 
-def four_point_transform(image, pts):
+def four_point_transform(image: np.ndarray, pts: np.ndarray):
 	# obtain a consistent order of the points and unpack them
 	# individually
 	rect = order_points(pts)
