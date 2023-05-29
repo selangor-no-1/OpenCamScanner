@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Something",
+  name: "OpenCamScanner",
   description:
     "A LifeHack 2023 Project.",
   mainNav: [
