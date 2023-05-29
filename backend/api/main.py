@@ -6,6 +6,17 @@ from cv import scan, load_and_compress
 from PIL import Image
 from firebase import (initialize_app, initialize_bucket, ls, download_from_filepath, upload_from_filepath)
 
+
+######################### Seed
+
+if not os.path.exists("./tmp"):
+    os.mkdir("./tmp")
+if not os.path.exists("./tmp/in/"):
+    os.mkdir("./tmp/in/")
+if not os.path.exists("./tmp/out/"):
+    os.mkdir("./tmp/out/")
+
+
 ######################### Helpers
 def cleanup_tmp() -> None:
     in_paths = glob.glob("tmp/in/*")
