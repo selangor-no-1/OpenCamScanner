@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Something",
+  name: "OpenCamScanner",
   description:
-    "A LifeHack 2023 Project.",
+    "A LifeHack 2023 Project",
   mainNav: [
     {
       title: "Home",
@@ -12,7 +12,7 @@ export const siteConfig = {
     {
       title: "Dashboard",
       href: '/dashboard'
-    },
+    }
   ],
   links: {
     twitter: "https://twitter.com/shadcn",
