@@ -1,8 +1,7 @@
-import Link from "next/link"
-
 "use client";
 
-import storage from "./../../../config/firebaseConfig.js"
+import Link from "next/link"
+import { storage } from "@/lib/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 
 import { siteConfig } from "@/config/site"
@@ -16,15 +15,12 @@ import Sidebar from "@/components/sidebar"
 
 import React, { Fragment, useEffect, useState } from 'react';
 
-
-
-
 export default function DummyPage() {
   const [file, setFile] = useState(null);
   const [files, setFiles] = useState([]);
   const [percent, setPercent] = useState(0);
 
-  function handleChange(event) {
+  function handleChange(event: any) {
       setFile(event.target.files[0]);
   }
 
@@ -115,13 +111,12 @@ export default function DummyPage() {
   return (
     <section className="flex">
     
-    <Sidebar />
-    <section className="container">
-    <input type="file" onChange={handleChange} accept="/image/*" />
-    <Button variant="outline" onClick={uploadAndSendAPI}>Button</Button>
-        {/* <FilePreviewList files = {sampleFiles} /> */}
-        
-    </section>
+        <Sidebar />
+        <div className="container">
+            <input type="file" onChange={handleChange} accept="/image/*" />
+            <Button variant="outline" onClick={uploadAndSendAPI}>Button</Button>
+            {/* <FilePreviewList files = {sampleFiles} /> */}
+        </div>
     </section>
   )
 }
