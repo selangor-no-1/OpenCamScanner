@@ -81,10 +81,10 @@ type cardProps = {
 function DisplayCard( {id, name, previewImage}: cardProps) {
   return (
     <Card key={id} className="items-center">
-      <CardContent>
+      <CardContent className="p-4">
         <Image src={previewImage} alt="Card Image" width={300} height={200} className="rounded-lg" />
       </CardContent>
-      <CardFooter>{name}</CardFooter>
+      <CardFooter className="justify-center">{name}</CardFooter>
     </Card>
   )
 }
