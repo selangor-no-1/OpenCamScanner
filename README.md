@@ -1,6 +1,7 @@
 # OpenCamScanner
 
-Backend hosted at: https://web-production-1361.up.railway.app/
+Backend hosted at: https://web-production-1361.up.railway.app/  
+
 Frontend hosting at: [pending deployment to Vercel]
 
 ### Quick Start
